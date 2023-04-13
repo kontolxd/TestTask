@@ -1,17 +1,11 @@
 #!/usr/bin/env php
 <?php
+require_once __DIR__ . '/../vendor/autoload.php';
+require_once __DIR__ . '/../src/App/Commands/CountCommand.php';
 
-use App\Kernel;
-use Symfony\Bundle\FrameworkBundle\Console\Application;
+use App\Command\CountCommand;
+use Symfony\Component\Console\Application;
 
-if (!is_file(dirname(__DIR__).'/vendor/autoload_runtime.php')) {
-    throw new LogicException('Symfony Runtime is missing. Try running "composer require symfony/runtime".');
-}
-
-require_once dirname(__DIR__).'/vendor/autoload_runtime.php';
-
-return function (array $context) {
-    $kernel = new Kernel($context['APP_ENV'], (bool) $context['APP_DEBUG']);
-
-    return new Application($kernel);
-};
+$app = new Application();
+$app->add(new CountCommand());;
+$app->run();
